@@ -1,0 +1,477 @@
+		1.‘&$var’ yazýlýþýndaký ‘&’ iþaresinin menasý nedir?
+Reference-nin 3 novu vardir.
+
+1)assign by reference
+$a = 5;
+$b = &  $a;
+$b = 3;
+echo $b."<br>";
+echo $a."<br>";
+/////////////////////
+3
+3
+
+2)passing by reference
+function foo(&$var)
+{
+    $var++;
+}
+$z = 5;
+foo($z);
+echo $z;
+/////////////////////
+6
+
+3)returning by reference
+class foo {
+    public $value = 42;
+    public function &getValue() {
+        return $this->value;
+    }
+}
+$obj = new foo;
+$myValue = &$obj->getValue(); 
+$obj->value = 2;
+var_dump($myValue);
+//////////////////////
+C:\wamp\www\PhpProject1\Classes\test_&$var.php:44:  int 2 
+*********************************************************************************
+		2.‘$var’ ve ‘$$var’ yazýlýslarý arasýndaký ferqi izah edin?
+$ isaresi  deyiskenin qarsisina qoyulduqda onun hem deyerine reference verir  hem de onun deyerin variable adi kimi goturub reference verir.
+$x = "cavid";
+$$x = "sergio";
+echo $x."<br/>";
+echo $$x."<br/>";
+echo $cavid;
+/////////////////////
+cavid
+sergio
+sergio
+**********************************************************************************
+		3.isset() funksiyasýnýn dondurduyu deyer?
+isset() funksiyasi boolean deyer donderir.Eger her hansi bir deyisken set olunubsa true deyer donderir ve eksine.
+echo $b = 5;
+var_dump(isset($b));
+//////////////////////
+C:\wamp\www\PhpProject1\Classes\isset().php:4:  boolean true
+**********************************************************************************
+		4.Serialize function nedir?
+Serialeize() funksiyasi komplex datalari stringe cevirir ki bu da datanin saxlanmasi ve oturumesi ucun elverislidir.Bu usulnan datani tipinin ve strukturunun deyisilmesi riski olmur.Unserialize() funksiyasi eksini etmek olar. 
+$a= array( '1' => ' elem 1', '2'=> 'elem 2', '3'=>' elem 3');
+print_r($a);
+echo ("<br></br>");
+$b=serialize($a);
+print_r($b);
+//////////////////////
+Array ( [1] => elem 1 [2] => elem 2 [3] => elem 3 ) 
+a:3:{i:1;s:7:" elem 1";i:2;s:6:"elem 2";i:3;s:7:" elem 3";}
+**********************************************************************************
+		5.ekrana ne cixacaq
+bar funksiyasi $a propertysini gormur. Neticede  null qaytarir. foo funksiyasi da hemin null-u bir vahid artiraraq  1 edir.
+$a = 5;
+function foo(&$var)
+{
+    $var++;
+    echo $var;
+}
+function &bar()
+{
+   return $a;
+}
+ $foo1 = foo(bar());
+//////////////////////
+1 
+**********************************************************************************
+		6.elave dirnaqlardan ist etmeden "He drank some apple juice" ekrana bu yazini cixar
+$juice = "apple";
+echo "He drank some $juice juice";
+&quot yada &#34 kodundan ist ede bilerik.HTML kod cedvelinde bu tip kodlar var.Butun browserlerde desteklenir bu cedvel kodlari.
+//////////////////////
+"He drank some apple juice"
+**********************************************************************************
+		7.unlink() ve unset() arasindaki ferqler nelerdir
+unlink():
+bu funksiya file-leri silir.true yada false donderir. yazilisi unlink(filename).//bezen unlink(filename , context).
+unset():
+bu funsiya ise set olunan deyerleri unset edir.true yada false donderir(qaytarir). unset($var);
+Tamam basqa funksiyalardir!.
+		
+**********************************************************************************
+		8.Asaqýdaký kod fraqmentini arasdýrýn ve array_column() funksiyasýnýn dondurduyu deyerinin tipini seçin.
+$records = [
+    [ 'id' => 2135, 'first_name' => 'John', 'last_name' => 'Doe' ],
+    [ 'id' => 3245,'first_name' => 'Sally', 'last_name' => 'Smith' ],
+    [ 'id' => 5342, 'first_name' => 'Jane', 'last_name' => 'Jones' ],
+    [ 'id' => 5623, 'first_name' => 'Peter', 'last_name' => 'Doe' ]
+];
+$first_names =  array_column($records,'first_name');
+Funksiyanin qaytardiqi deyer string-dir.Yazilisi beledir: array_column($var , column_key).Meselen biz yuxarida $records arrayinda 'first-name' adindaki sutunlari qeyd etdik, funksiya ise bize hemin sutundaki deyerleri arraya salib geri qaytarir.
+**********************************************************************************
+		9.stringin uzunluqun hesablayan funksiya yazin.
+$word = "Code Academy 2016";
+
+$var = substr_replace($word, "@" , -1);
+
+function check($string)
+{
+    $count = 1;
+    for($i=0; $i<660; $i++)
+    {
+       if(@$string[$i] != "@"){$count++;}
+       else break;
+    }
+    return $count;
+}
+echo check($var);
+**********************************************************************************
+		10.Output ne olacaq ve ne ucun?
+$x = true and false;
+var_dump($x);
+//////////////////////
+boolean true olacaq.Ilk verdiyimiz deyeri goturur.Ustunluk birinciye verilir.Assign edende saqdan sola gelir.
+**********************************************************************************
+		11.
+$x = NULL
+     if ('0xFF' == 255) {// true deyer donderir hexcademinal '0xFF' 255 demekdi.
+    $x = (int)'0xFF';
+}      
+
+echo $x;
+//cunki herfi reqeme cevire bilmir ve sifir deyeri atiyir
+**********************************************************************************
+		12.
+0-ile basladigi ucun octal ededdir. ve octal16 ededi decimalda 14e beraberdir.ona gorede 14/2=7 qaytarir.
+**********************************************************************************
+		13.final and static 
+final  keyword-u ancaq class ve methodlara tetbiq oluna biler.Bu keyword yazilan klass ve ya method meselen basqa klasa extend oluna bilmez.
+class BaseClass {
+   public function test() {
+       echo "BaseClass::test() called\n";
+   }
+   
+   final public function moreTesting() {
+       echo "BaseClass::moreTesting() called\n";
+   }
+}
+
+class ChildClass extends BaseClass {
+   public function moreTesting() {
+       echo "ChildClass::moreTesting() called\n";
+   }
+}//burada error verecekki , final methodu override etmek olmur.
+
+final class BaseClass {
+   public function test() {
+       echo "BaseClass::test() called\n";
+   }
+
+   // Here it doesn't matter if you specify the function as final or not
+   final public function moreTesting() {
+       echo "BaseClass::moreTesting() called\n";
+   }
+}
+
+class ChildClass extends BaseClass {
+}//burada ise deyecekkiChildClass-i BaseClass-a inherit etmek olmur. 
+
+static keyword-u method ve propertylere (class) tetbiq olunur.Bu o demekdirki biz artiq obekt yaratmadan hemin method ve ya property-e muraciet ede bilerik.
+static olan property class daxilinde ve ya her hansisa bir yerde deyisdirildike onun addresi de deyisdirilmis olur bu o demekdirki onun deyeri de deyisir.$this static methodun icerisinde mumkun olmur.
+
+**********************************************************************************
+		14.session and cookies
+sessionlar barede melumatimiz var cookies-lere geldikde ise adeten user-i tanimlamaq ucun ist olunur.cookiesler kicik fayl seklinde her userin kompunda yerlesir. cookieslerin yasam dovru olur onu server teyin edir.Bu usul tehlukesizlik baximindan meslehet deyil ona gore de userin sexsi melumatlari sessionlar vasitesile saxlanilir.
+setcookie() funksiyasi vasitesile yaradilir.
+
+$cookie_name = "user";
+$cookie_value = "John Doe";
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+biz burada $_COOKIE['cookie_name'] global cookiesin yaratdiq meselen.
+Gorunduyu kimi userin public melumatlari cookielerde saxlanilir.
+**********************************************************************************
+		15.construktoru protected ve ya private etsek ne olar
+__constuct yalniz public olmalidir.Eks halda fatal_error mesaji olar.constructoru private protected elemek mentiq cehetden doqru da deyil hec.
+**********************************************************************************
+		16.traits in php
+traits php-de mueyyen problemlere gore yaradildi.Meselen bir classdan yalniz bir class extend oluna bilirdi.Traits-lere hazir kod toplusu kimi baxmaq olar.Onlari istediyimiz qeder istediyimiz zaman ist ede bilerik.Bir nov copy paste demek olar.Bu haqda cox danismaq olar.
+trait Sharable {
+  public function share($item)
+  {
+    return 'share this item';
+  } 
+}//trait yaratdiq
+
+class Post {
+  use Sharable;
+}
+
+class Comment {
+  use Sharable;
+}//artiq her iki class-in Sharable methodu var.
+
+traitler abstract classlardan tebiki tamamile ferqlidir hemcinin interfeyslerden.Mence numune vermeye ehtiyyac yoxdur.
+**********************************************************************************
+		17.mysql connection oop
+Muxtelif cur yazmaq olar.Menim fikrimce en asan basa dusulen kod asaqidaki kimidir.
+
+class mySQL{
+
+  var $host;
+  var $username;
+  var $password;
+  var $database;
+
+  public function connect($set_host, $set_username, $set_password, $set_database){
+    $this->host = $set_host;
+    $this->username = $set_username;
+    $this->password = $set_password;
+    $this->database = $set_database;
+
+    mysql_connect("$host", "$username", "$password")or die("cannot connect");
+    mysql_select_db("$database")or die("cannot select DB");
+  }
+
+}
+
+$connect = new mySQL();
+$connect -> connect('localhost', 'user', 'pass', 'database1');
+**********************************************************************************
+		18.construcorla baqli sual
+Meselen biz 
+$myObj = new Example();
+yeni obyekt yaratmis oluruq.Yox eger bele olsaydi 
+$myObj = new Example("cavid");
+$myObj = new Example(15); ve s. 
+Bu o demekdirki biz constructor yaradmisiq ve konstruktor bizim daxil etdiyimiz deyeri classin property-sine assign edecek , classin funksiyasinda ist edecek ve s.
+Koda baxaq:
+class Person {
+
+    public $name = '';
+
+    public function __construct( $name ) {
+        $this->name = $name;
+    }
+
+}
+
+$person = new Person( "Joe" );
+echo $person->name;
+////////////////////////////
+Joe
+**********************************************************************************
+		19.kalkulyator.
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+            input{
+                padding: 10px;
+                background:  aqua;
+            }
+            select{
+                padding: 8px;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"> 
+           value1 <input type="text" name="value1" placeholder="num1">
+           value2 <input type="text" name="value2" placeholder="num2">
+           <select name="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="/">/</option>
+                <option value="*">*</option>
+                <option value="%">%</option>
+            </select><br><br>
+            <input type="submit" name="submit">
+        </form>
+        <p>Answer is: </p>
+        
+        <?php
+            if(isset($_POST['submit'])){
+                $result1 = $_POST['value1'];
+                $result2 = $_POST['value2'];
+                $operator = $_POST['operator'];
+                switch ($operator){
+                    case "None": echo "select operator!";break;
+                    case "+": echo $result1 + $result2;break;
+                    case "-": echo $result1 - $result2;break;
+                    case "/": echo $result1 / $result2;break;
+                    case "*": echo $result1 * $result2;break;
+                    case "%": echo $result1 % $result2;break;
+                }
+            }
+        ?>
+    </body>
+</html>
+**********************************************************************************
+		20._sleep() and _wakeup() //magic functions
+Serialize funksiyasini caqiran zaman  birinci obyektde _sleep adli funksiyanin olub-olmadigini yoxlayir. _sleep funksiyasi hec vaxt parametr qebul etmez ve yalniz serialize()
+cagirilanda isleyir, bir array qaytarir, haradaki serialize yalniz qeyd olunan array elementleri uzerinde isleyir , qalanlar ise silinir. Lazim olmayan  fayllarin saxlanmasina ve istifadesine ehtiyyac qalmir._wakeup() ise unserialize() funksiyasi ucun oxsar  ilseri gorur
+//basa dusulmesi cetindi biraz
+**********************************************************************************
+		21.session_unregister() ve session_unset()
+session_unregister() -global deyiskeni olduqu sessiondan unregister edir.True ya da False qaytarir.
+session_unset() i -  butun  session-lari unset edir.
+session_unset() hec bir deyer qaytarmir ve hec bir deyer qebul etmir yeni void-dir.
+Bu funksiyani ist ederken diqqetli olmaq lazimdir.Cunki butun current sessionlari unset eder.
+**********************************************************************************
+		22.$GLOBALS
+global scope-de olan butun deyerleri ozunde saxlaya biler.Asaqidaki kod her seyi izah eder mence
+function test() {
+    $foo = "local variable";
+
+    echo '$foo in global scope: ' . $GLOBALS["foo"] . "\n";
+
+    echo '$foo in current scope: ' . $foo . "\n";
+}
+
+$foo = "Example content";
+test();
+////////////////////////
+$foo in global scope: Example content
+$foo in current scope: local variable
+**********************************************************************************
+		23.Bir form-unuz var ve hemin form daxilinde þekil yükleyirsiniz. 
+		Þekil yüklenen zaman xeta baþ verir(error). Hemin xeta barede nece melumat almaq olar ?
+
+Asaqidaki koda baxaq:
+
+$error = $_FILES['userFile']['error']; seklinde uygulanir ve bu ifadenin donderdiyi deyere esasen errorun harada olduqu mueyyen edilir.Mes:
+
+UPLOAD_ERR_OK
+degeri 0; xeta yoxdur file yuklenilib
+
+UPLOAD_ERR_INI_SIZE
+degeri 1; 
+Yüklenen file php.ini içindeki upload_max_filesize-de gosterilen deðeri aþmaqdadir.
+
+UPLOAD_ERR_FORM_SIZE
+Deðeri: 2; Yüklenen file HTML form içinde gosterilen  MAX_FILE_SIZE deðerini aþmaktadýr.
+
+UPLOAD_ERR_PARTIAL
+Deðeri: 3; File qismen yüklenmiþtir.
+
+UPLOAD_ERR_NO_FILE
+degeri 4; file yuklenmemisdir
+ 
+ve s. //8-e kimi gedir
+
+biz burada 
+if($error != 0){ 
+     echo "sekil yuklenmemisdir111";
+}
+**********************************************************************************
+		24.Form-da sadece [.jpg], [.png], [.gif] formatlý þekilleri qebul eden bir script yazýn.
+Asaqidaki koda baxaq:
+
+$target_dir = "images/";
+$target_file = $target_dir . date('dmYGis') . basename($_FILES["sekil"]["name"]);
+
+$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+echo $imageFileType;
+
+if ($imageFileType == 'jpg' || $imageFileType == 'png'|| $imageFileType == 'gif') {
+    if ($_FILES['sekil']['size'] < 500*1024) {
+        move_uploaded_file($_FILES["sekil"]["tmp_name"], $target_file);
+    } else {
+        echo 'olçu boyukdu max 500 kb';
+    }
+} else {
+    echo 'bu fayl ' . $imageFileType . 'yaramir';
+}
+
+**********************************************************************************
+		25. (`.`) ve (`.=`) arasýndaký ferq barede araþdýrýb kiçik melumat yazýn.
+Asaqidaki kodu arasdiraq:
+$a="Cavid"."Salam"; // . stringleri birlesdirir
+$b="Cavid"; 
+echo $b.="Salam"; //cavid-e salam-i birlesdirir.
+Eslinde mentiq etibarile -= , += , *= , %=  ve s. kimi aparir ozun. 
+$b.="Salam" bele yazilir sade sekilde $b = $b."Salam"
+**********************************************************************************
+		26.Shekilin width ve height-i hansý method vasitesile info elde etmek olar ?
+getimagesize('path file'); 
+funksiyasi vasitesile tapmaq olar.Asaqidaki koda baxaq:
+
+var_dump(getimagesize('download.png'));
+
+C:\wamp\www\PhpProject1\Classes\test_25.php:7:
+array (size=6)
+  0 => int 204
+  1 => int 204
+  2 => int 3
+  3 => string 'width="204" height="204"' (length=24)
+  'bits' => int 8
+  'mime' => string 'image/png' (length=9)
+Demeli bu funksiya bize string qaytarir.Arrayin 0 indeksi seklin width-in , 1-ci indeksi height-in qaytarir.
+
+Meselen biz 
+$array = getimagesize('download.png');
+
+echo "width:".$array[0];
+echo "height:".$array[1];
+yazaraq width ve height-i almis oluruq.
+**********************************************************************************
+		27.PHP-de error type-lari arasdirin.
+PHP-de errorlarin 4 novu vardir.Bunlar asaqidakilardi:
+1)Parse errors(syntax errors)
+2)Fatal errors
+3)Warning errors
+4)Notice errors
+
+1.Parse errors
+bu errora iki nov sebeb olur.
+-baqlanmamis isareler("" , '' , ; , ve s.)
+-baqlanmamis moterizeler( () , [] , {})
+
+2.Fatal errors
+Fatal error o demekdir ki sen php-nin basa dusmediyi kodu yazmisan.Emeliyyat yerine yetirilmediyi ucun error cixie.
+
+3.Warning errors
+Bu errora esas sebeb ya incorrect numberdir yada itirilmis file ola biler.
+
+4.Notice errors
+Bu errorlar da Warning errorlara benzeyir.Adeten siz undefined variableye kecid etmek isdedikde ve ya onu ekrana cixarmaq isdediyinizde ist olunur.
+
+
+
+
+**********************************************************************************
+		28.$_PHP_SELF ne ucun istifade edilir?
+.$_PHP_SELF bu deyisken bize formlarda yararli olur adeten .meselen
+<form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
+Biz bele yazan zaman form submit olduqda action sehve daxili gedir.Yeni basqa sehveye kecid elemeye ehtiyyac yoxdur.
+Lakin burada tehlukesizlik baximindan catismazliq var.Kimse decellik eliyib js ile bizim koda mudaxile ede biler.Meselen:
+%22%3E%3Cscript%3Ealert('hacked')%3C/script%3E bu kodu urlimizin sonuna yazilarsa kod bele tercume olunacaq:<script>alert('hacked')</script>
+bunun qarsisin almaq ucun <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> bele yazilir.Burada 
+htmlspecialchars() function bunun qarsinin alir.Kodu xususi hala salirki bu da tehlukenin qarsinin alir.
+**********************************************************************************
+		29.PHP interface barede arasdirin.
+Eslinde bu movzu haqqinda cox sey yazmaq olar.Qisaca olaraq interfeys abstract classin xususi formasi kimi bir seydi.Burada her method abstract olur.Interfeys adindan da 
+gorunduyu kimi biz hansisa obyekt yaradan zaman evvelce interfeysin yaratsaq daha yaxsidi cunki interfeys daxili abstract methodlardir ve biz obyektin vacib olan her hansi
+bir methodun gozden qacirmayacayiq cunki interfeys bizi mecbur edecekki bu methodlardan ist edek.
+
+class Interfys {
+	function go();
+	function walk();
+}
+
+ve biz her hansisa class-i implements edirik bu interfeyse
+
+class Example implements Interfys
+{
+	biz burada artiq intefysin methodlarin yaziq icin doldurmaliyiq.			
+}
+
+Gorunduyu kimi interfys vacib bir seydi oop-de.
+**********************************************************************************
+		30.PHP -de nece mail gondermek olar?
+bool mail ( string $to , string $subject , string $message [, string $additional_headers [, string $additional_parameters ]] );
+string $to -  kime gonderirsense maili
+string $subject -movzu
+string $message - ne istesen yaz  
